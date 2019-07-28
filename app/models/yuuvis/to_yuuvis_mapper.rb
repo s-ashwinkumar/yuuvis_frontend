@@ -48,7 +48,7 @@ module Yuuvis
     end
 
     def build_metadata(data, index)
-      _data = %I( version created author).each_with_object({}) do |key, hash|
+      _data = %I(version created author title country).each_with_object({}) do |key, hash|
         hash[key] = { value: data[key]}
       end
 
@@ -58,7 +58,7 @@ module Yuuvis
       {
         properties: _data.merge({
             'enaio:objectTypeId' => {
-              value: "review"
+              value: "reviewData"
             },
             tags: {
               value: data[:tags].keys
@@ -69,7 +69,7 @@ module Yuuvis
         }),
         contentStreams: [
           {
-            cid: "review_#{Time.now.to_i}_index"
+            cid: "review_#{Time.now.to_i}_#{index}"
           }
         ]
       }

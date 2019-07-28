@@ -30,7 +30,7 @@
     <id>created</id>
     <propertyType>datetime</propertyType>
     <cardinality>single</cardinality>
-    <required>true</required>
+    <required>false</required>
   </propertyDateTimeDefinition>
   <propertyStringDefinition>
     <id>author</id>
@@ -44,6 +44,18 @@
     <cardinality>multi</cardinality>
     <required>false</required>
   </propertyStringDefinition>
+  <propertyStringDefinition>
+    <id>title</id>
+    <propertyType>string</propertyType>
+    <cardinality>single</cardinality>
+    <required>false</required>
+  </propertyStringDefinition>
+  <propertyStringDefinition>
+    <id>country</id>
+    <propertyType>string</propertyType>
+    <cardinality>single</cardinality>
+    <required>false</required>
+  </propertyStringDefinition>
   <propertyDecimalDefinition>
     <id>tagsSentiment</id>
     <propertyType>decimal</propertyType>
@@ -51,14 +63,16 @@
     <required>false</required>
   </propertyDecimalDefinition>
   <typeDocumentDefinition>
-    <id>review</id>
+    <id>reviewData</id>
     <baseId>enaio:document</baseId>
+    <propertyReference>title</propertyReference>
+    <propertyReference>country</propertyReference>
+    <propertyReference>created</propertyReference>
     <propertyReference>author</propertyReference>
     <propertyReference>rating</propertyReference>
     <propertyReference>sentiment</propertyReference>
     <propertyReference>version</propertyReference>
     <propertyReference>votes</propertyReference>
-    <propertyReference>created</propertyReference>
     <propertyReference>tags</propertyReference>
     <propertyReference>tagsSentiment</propertyReference>
     <contentStreamAllowed>required</contentStreamAllowed>
