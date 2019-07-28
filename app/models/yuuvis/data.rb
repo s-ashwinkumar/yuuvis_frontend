@@ -27,16 +27,7 @@ module Yuuvis
     end
 
     def bar_summary
-      resp = connection.post do |req|
-        req.url "/dms/objects/search"
-        req.headers['Content-Type'] = 'application/json'
-        req.body = {
-          query: {
-            "statement":"SELECT count(*) as count, version as version FROM enaio:object GROUP BY version"
-          }
-        }.to_json
-      end
-      data = JSON.parse(resp.body)
+      data = search("SELECT count(*) as count, version as version FROM enaio:object GROUP BY version")
       first_res = data["objects"].each_with_object({}) do |item, obj|
         _dat = item['properties']
         obj[_dat.dig('version','value')] = {t_count: _dat.dig('count','value')}
@@ -49,21 +40,41 @@ module Yuuvis
 
 
     def group_by_ratings(version)
-      resp = connection.post do |req|
-        req.url "/dms/objects/search"
-        req.headers['Content-Type'] = 'application/json'
-        req.body = {
-          query: {
-            "statement":"SELECT count(*) as count, rating as rating FROM enaio:object where version = '#{version}' GROUP BY rating;"
-          }
-        }.to_json
-      end
-      data = JSON.parse(resp.body)
+      data = search("SELECT count(*) as count, rating as rating FROM enaio:object where version = '#{version}' GROUP BY rating;")
       data["objects"].each_with_object({}) do |item, obj|
         _dat = item['properties']
         obj[_dat.dig('rating','value')] = _dat.dig('count','value')
       end
     end
 
+    def get_all_object_ids
+      data = search("SELECT objectId as id FROM enaio:object;")
+      data["objects"].each_with_object([]) do |item, obj_ids|
+
+        obj_ids << item.dig('properties', 'id', 'value')
+      end
+    end
+
+    def search(query)
+      resp = connection.post do |req|
+        req.url "/dms/objects/search"
+        req.headers['Content-Type'] = 'application/json'
+        req.body = {
+          query: {
+            "statement": query
+          }
+        }.to_json
+      end
+      JSON.parse(resp.body)
+    end
+
+    private
+    def reset!
+      get_all_object_ids.each do |id|
+        connection.delete do |req|
+          req.url "/dms/objects/#{id}"
+        end
+      end
+    end
   end
 end

@@ -48,8 +48,12 @@ module Yuuvis
     end
 
     def build_metadata(data, index)
-      _data = %I(rating sentiment version votes created author).each_with_object({}) do |key, hash|
+      _data = %I( version created author).each_with_object({}) do |key, hash|
         hash[key] = { value: data[key]}
+      end
+
+      _data = %I(rating sentiment votes).each_with_object(_data) do |key, hash|
+        hash[key] = { value: data[key].to_f}
       end
       {
         properties: _data.merge({
@@ -60,7 +64,7 @@ module Yuuvis
               value: data[:tags].keys
             },
             tagsSentiment: {
-              value: data[:tags].values
+              value: data[:tags].values.map(&:to_f)
             }
         }),
         contentStreams: [

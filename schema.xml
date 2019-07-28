@@ -19,13 +19,13 @@
     <cardinality>single</cardinality>
     <required>true</required>
   </propertyStringDefinition>
-  <propertyIntegerDefinition>
+  <propertyDecimalDefinition>
     <id>votes</id>
-    <propertyType>integer</propertyType>
+    <propertyType>decimal</propertyType>
     <cardinality>single</cardinality>
     <required>false</required>
     <defaultValue>0</defaultValue>
-  </propertyIntegerDefinition>
+  </propertyDecimalDefinition>
   <propertyDateTimeDefinition>
     <id>created</id>
     <propertyType>datetime</propertyType>
