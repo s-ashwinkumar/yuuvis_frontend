@@ -27,6 +27,7 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'high_voltage'
 gem 'jquery-rails'
 gem 'mysql2', '~> 0.4.4'
+gem 'faraday'
 group :development do
   gem 'better_errors'
   gem 'rails_layout'

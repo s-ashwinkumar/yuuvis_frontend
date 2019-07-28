@@ -1,0 +1,20 @@
+{
+  "objects": [{
+    "properties": {
+      "enaio:objectTypeId": {
+        "value": "document",
+      },
+      "votes": {
+        "value": 76
+      },
+      "from"
+      "Name": {
+        "value": "test"
+      },
+      "author": "",
+    },
+    "contentStreams": [{
+      "cid": "cid_63apple"
+    }]
+  }]
+}
