@@ -1,17 +1,27 @@
 <%# navigation styled for Bootstrap 4.0 %>
 <div class="container">
-  <nav class="navbar navbar-dark bg-inverse">
-    <ul class="nav navbar-nav clearfix">
-      <li class="nav-item">
-        <button class="navbar-toggler hidden-sm-up nav-link" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
-          &#9776;
-        </button>
-      </li>
-    </ul>
-    <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
-      <%= link_to "Rails bootstrap", root_path, class: 'navbar-brand' %>
-      <ul class="nav navbar-nav">
-        <%= render 'layouts/navigation_links' %>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="/">LoveHateWant</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="<%= 'active' if current_page?(root_path) %>">
+          <a class="nav-link" href="/">ReadMe</a>
+        </li>
+        <li class="<%= 'active' if current_page?(configure_path) %>">
+          <a class="nav-link" href="/configure">Configure</a>
+        </li>
+        <li class="<%= 'active' if current_page?(dashboard_path) %>">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+        </li>
+        <li class="<%= 'active' if current_page?(details_path) %>">
+          <a class="nav-link" href="/details">Details</a>
+        </li>
+        <li class="<%= 'active' if current_page?(demo_path) %>">
+          <a class="nav-link" href="/demo">Demo</a>
+        </li>
       </ul>
     </div>
   </nav>
