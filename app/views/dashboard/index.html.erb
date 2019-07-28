@@ -1,0 +1,63 @@
+
+  <div class="main-navbar sticky-top bg-white">
+    <!-- Main Navbar -->
+
+  </div>
+  <!-- / .main-navbar -->
+  <div class="main-content-container container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4">
+      <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <h3 class="page-title">Dashboard</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Users Stats -->
+      <div class="col-lg-8 col-md-12 col-sm-12 mb-4">
+        <div class="card card-small">
+          <div class="card-header border-bottom">
+            <h6 class="m-0">Overall Ratings</h6>
+          </div>
+          <div class="card-body pt-0">
+            <%= render 'dashboard/chart1' %>
+          </div>
+
+        </div>
+      </div>
+      <!-- End Users Stats -->
+      <!-- Users By Device Stats -->
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card card-small h-100">
+          <div class="card-header border-bottom">
+            <h6 class="m-0">Trending Terms</h6>
+          </div>
+          <div id="holder" class="card-body d-flex py-0">
+          </div>
+          <div class="card-body d-flex py-0">
+            <h5>Take a look at <a href="/insights">Insights Page</a> for more interesting metrics !</h5>
+          </div>
+        </div>
+      </div>
+      <!-- End Users By Device Stats -->
+      <!-- New Draft Component -->
+      <!-- End Top Referrals Component -->
+    </div>
+  </div>
+  <div class="row">
+    <!-- Users Stats -->
+    <div class="col-lg-12 col-md-16 col-sm-12 mb-4">
+      <div class="card card-small">
+        <div class="card-header border-bottom">
+          <h6 class="m-0">Sentiments by Version</h6>
+        </div>
+        <div class="card-body pt-0">
+          <%= render 'dashboard/chart2' %>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+

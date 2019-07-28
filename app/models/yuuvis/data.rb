@@ -48,15 +48,101 @@ module Yuuvis
       end
     end
 
+    def chart_x
+      data = search("SELECT sentiment as sentiment, created as created FROM reviewData where
+          created > '2019-07-20T21:42:18.000Z'
+          and created < '2019-07-28T21:42:18.000Z'
+          order by created asc",0, 500)
+      positives = Hash.new{|h,k| h[k] = 0}
+      negatives = Hash.new{|h,k| h[k] = 0}
+      data['objects'].each do |item, |
+        _dat = item['properties']
+        date = _dat.dig('created','value').to_datetime.day
+        val = _dat.dig('sentiment','value')
+        if val > 0
+          positives[date] +=1
+        else
+          negatives[date] +=1
+        end
+      end
+      {
+        positives: positives,
+        negatives: negatives
+      }
+    end
+
+
+    def chart_1(data = nil)
+      data = search("SELECT sentiment as sentiment, version as version FROM reviewData order by version",0, 2000) unless data
+      positives = Hash.new{|h,k| h[k] = 0}
+      negatives = Hash.new{|h,k| h[k] = 0}
+      data['objects'].each do |item, |
+        _dat = item['properties']
+        version = _dat.dig('version','value')
+        val = _dat.dig('sentiment','value')
+        if val > 0
+          positives[version] +=1
+        else
+          negatives[version] +=1
+        end
+      end
+      {
+        positives: positives,
+        negatives: negatives
+      }
+    end
+
     def get_all_object_ids(skip_count: 0)
-      data = search("SELECT objectId as id FROM enaio:object;", skip_count)
+      data = search("SELECT objectId as id FROM reviewData;", skip_count)
       data["objects"].each_with_object([]) do |item, obj_ids|
 
         obj_ids << item.dig('properties', 'id', 'value')
       end
     end
 
-    def search(query, skip = 0)
+    def dashboard_charts
+      data = get_all
+      positives = Hash.new{|h,k| h[k] = 0}
+      negatives = Hash.new{|h,k| h[k] = 0}
+      ratings_hash = Hash.new{|h,k| h[k] = 0}
+      tags = Hash.new{|h,k| h[k] = {count:0, sentiment:0}}
+      data['objects'].each do |item |
+        _dat = item['properties']
+        next if _dat.empty?
+        rating = _dat.dig('rating','value')
+        version = _dat.dig('version','value')
+        val = _dat.dig('sentiment','value')
+        tag_hash = _dat.dig('tags','value').zip(_dat.dig('tagsSentiment','value')).to_h
+        tag_hash.each do |key,val|
+          _tmp = tags[key.downcase]
+          tags[key.downcase] = {count: _tmp[:count]+1, sentiment: _tmp[:sentiment]+val }
+        end
+        if val > 0
+          positives[version] +=1
+        else
+          negatives[version] +=1
+        end
+        ratings_hash[rating.round] +=1
+      end
+      {
+        chart2: {
+          positives: positives,
+          negatives: negatives
+        },
+        chart1: {
+          data: ratings_hash.sort
+        },
+        entries: tags.sort_by{|_k,v| v[:sentiment].abs}.reject{|item| item.first.length < 3}.reverse[0..22].map(&:first)
+      }
+    end
+
+    def get_all
+      search("SELECT rating as rating, sentiment as sentiment, created as created,
+        tags as tags, version as version, tagsSentiment as tagsSentiment FROM reviewData order by created desc;", 0,2000)
+    end
+
+
+    def search(query, skip = 0, max = 50)
       resp = connection.post do |req|
         req.url "/dms/objects/search"
         req.headers['Content-Type'] = 'application/json'
@@ -64,6 +150,7 @@ module Yuuvis
           query: {
             "statement": query,
             "skipCount": skip,
+            "maxItems": max
           }
         }.to_json
       end
@@ -74,6 +161,8 @@ module Yuuvis
         Thread.start{delete!(id)}
       end
     end
+
+
 
     private
 
