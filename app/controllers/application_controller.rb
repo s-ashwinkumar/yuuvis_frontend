@@ -25,4 +25,23 @@ class ApplicationController < ActionController::Base
     end
     render json: {data: array, resp: JSON.parse(resp.body)}
   end
+
+  def form_post
+   byebug
+   data = [{
+	   author: params[:author], 
+           version: params[:version],
+	   rating: params[:rating],
+	   title: params[:title],
+	   text: params[:text]
+   }]
+   #resp = Faraday.post do |req|
+   #   req.url "https://19a4e14c.ngrok.io/yuvis/v1/translate"
+   #   req.headers['Content-Type'] = 'application/json'
+   #   req.body = array.to_json
+   # end
+
+   flash[:notice] = "Your sentimental score is  #{data}"
+   redirect_to '/configure'
+  end
 end

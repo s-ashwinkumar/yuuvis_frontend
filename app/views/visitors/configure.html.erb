@@ -1,4 +1,33 @@
 <div class="jumbotron">
-  <h1 class="display-6">Configure - TODO Gaurav</h1>
+  <h1 class="display-6">Configure</h1>
 
+<div class="container">
+
+<%= form_tag("/form_post", method: "post") do %>
+<table class="table table-striped">
+<tr>
+  <td><%= label_tag(:author, "Author") %></td>
+  <td><%= text_field_tag(:author) %> </td>
+</tr>
+<tr>
+  <td><%= label_tag(:version, "Version") %></td>
+  <td><%= text_field_tag(:version) %></td>
+</tr>
+<tr>
+  <td><%= label_tag(:rating, "Rating") %></td>
+  <td><%= text_field_tag(:rating) %></td>
+ </tr>
+<tr>
+  <td><%= label_tag(:title, "Title") %></td>
+  <td><%= text_field_tag(:title) %></td>
+</tr>
+<tr>
+  <td><%= label_tag(:content, "Content") %></td>
+  <td><%= text_area_tag(:content) %></td>
+</tr>
+<tr>
+  <td><%= submit_tag("Submit") %></td>
+</tr>
+<% end %>
+</div>
 </div>

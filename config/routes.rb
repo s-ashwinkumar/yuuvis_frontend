@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get '/details', to: 'visitors#details'
   get '/demo', to: 'visitors#demo'
   get '/convert', to: 'application#convert'
+  post '/form_post', to: 'application#form_post'
 end
