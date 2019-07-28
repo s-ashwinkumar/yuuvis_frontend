@@ -1,28 +1,49 @@
-<%# navigation styled for Bootstrap 4.0 %>
-<div class="container">
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="/">LoveHateWant</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav mr-auto">
-        <li class="<%= 'active' if current_page?(root_path) %>">
-          <a class="nav-link" href="/">ReadMe</a>
-        </li>
-        <li class="<%= 'active' if current_page?(configure_path) %>">
-          <a class="nav-link" href="/configure">Configure</a>
-        </li>
-        <li class="<%= 'active' if current_page?(dashboard_path) %>">
-          <a class="nav-link" href="/dashboard">Dashboard</a>
-        </li>
-        <li class="<%= 'active' if current_page?(details_path) %>">
-          <a class="nav-link" href="/details">Details</a>
-        </li>
-        <li class="<%= 'active' if current_page?(demo_path) %>">
-          <a class="nav-link" href="/demo">Demo</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Main Sidebar -->
+    <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
+      <div class="main-navbar">
+        <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
+          <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
+            <div class="d-table m-auto">
+              <span class="d-none d-md-inline ml-1">LoveHateWhat</span>
+            </div>
+          </a>
+          <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
+            <i class="material-icons">&#xE5C4;</i>
+          </a>
+        </nav>
+      </div>
+
+      <div class="nav-wrapper">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="<%= 'active' if current_page?(root_path) %> nav-link" href="/">
+              <i class="material-icons">edit</i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="<%= 'active' if current_page?(details_path) %> nav-link" href="/details">
+              <i class="material-icons">vertical_split</i>
+              <span>Insights</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="<%= 'active' if current_page?(configure_path) %> nav-link" href="/configure">
+            <i class="material-icons">vertical_split</i>
+            <span>Configure</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="<%= 'active' if current_page?(demo_path) %> nav-link" href="/demo">
+            <i class="material-icons">vertical_split</i>
+            <span>Details</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <!-- End Main Sidebar -->
+  </div>
 </div>
